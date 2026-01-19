@@ -1,6 +1,7 @@
 """Test configuration and fixtures for pytest unit testing workshop."""
 
 from datetime import datetime
+from unittest.mock import Mock
 from uuid import uuid4
 
 import pytest
@@ -24,9 +25,9 @@ def test_settings() -> Settings:
 
 
 @pytest.fixture
-def sample_user() -> User:
-    """Create a sample user for testing (not persisted to DB)."""
-    user = User.__new__(User)
+def sample_user() -> Mock:
+    """Create a sample user mock for testing (not persisted to DB)."""
+    user = Mock(spec=User)
     user.uuid = uuid4()
     user.username = "testuser"
     user.email = "test@example.com"
@@ -37,9 +38,9 @@ def sample_user() -> User:
 
 
 @pytest.fixture
-def admin_user() -> User:
-    """Create an admin user for testing (not persisted to DB)."""
-    user = User.__new__(User)
+def admin_user() -> Mock:
+    """Create an admin user mock for testing (not persisted to DB)."""
+    user = Mock(spec=User)
     user.uuid = uuid4()
     user.username = "admin"
     user.email = "admin@example.com"
@@ -50,9 +51,9 @@ def admin_user() -> User:
 
 
 @pytest.fixture
-def sample_task(sample_user: User) -> Task:
-    """Create a sample task for testing (not persisted to DB)."""
-    task = Task.__new__(Task)
+def sample_task(sample_user: Mock) -> Mock:
+    """Create a sample task mock for testing (not persisted to DB)."""
+    task = Mock(spec=Task)
     task.uuid = uuid4()
     task.title = "Test Task"
     task.description = "A test task description"

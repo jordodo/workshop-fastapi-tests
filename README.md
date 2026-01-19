@@ -9,6 +9,9 @@ A demo FastAPI application designed for learning pytest unit testing patterns.
 poetry install --no-root
 eval "$(poetry env activate)"
 
+# seed the database with sample data
+python -m project.db.seed
+
 # run the app
 uvicorn project.main:app --reload
 
@@ -18,6 +21,17 @@ pytest tests/unit/ -v
 # run with coverage
 pytest tests/unit/ --cov=project --cov-report=term-missing
 ```
+
+## Demo Credentials
+
+After seeding, the following users are available:
+
+| Username | Password | Role |
+|----------|----------|------|
+| admin | admin123 | Admin |
+| john | john123 | User |
+| jane | jane123 | User |
+| bob | bob123 | User |
 
 ## Project Structure
 
