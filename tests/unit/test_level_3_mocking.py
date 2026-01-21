@@ -18,7 +18,7 @@ from fastapi import HTTPException
 
 from project.db.models.task import Task
 from project.db.models.user import Role, User
-from project.exceptions import EntityNotFoundError
+from project.exceptions import AuthenticationError, EntityNotFoundError
 from project.security import TokenData, TokenPayload
 
 
@@ -255,6 +255,23 @@ class TestLevel3Exercises:
         - mock_verify returns False
         - Verify AuthenticationError is raised
         """
-        # from project.services.auth_service import authenticate_user
-        # YOUR CODE HERE
-        pass
+        from project.services.auth_service import authenticate_user
+
+        # arrange: create mock session and user
+        mock_session = Mock()
+        mock_user = Mock(spec=User)
+        mock_user.username = "testuser"
+        mock_user.email = "test@example.com"
+
+        # configure mock to return user when queried
+        mock_get_user.return_value = mock_user
+        mock_verify.return_value = True
+
+        authenticated_user = authenticate_user(mock_session, "testuser", "pass")
+
+        assert authenticated_user == mock_user
+
+        mock_verify.return_value = False
+
+        with pytest.raises(AuthenticationError) as exc_info:
+            authenticate_user(mock_session, "testuser", "wrongpassword")
