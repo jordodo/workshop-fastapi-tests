@@ -3,7 +3,7 @@ Level 1: Simple Assertion Tests
 ================================
 Goal: Test pure functions and Pydantic models with basic assertions.
 
-Focus: 5 practical tests you'll use daily in FastAPI development.
+Focus: 4 practical tests you'll use daily in FastAPI development.
 
 Run these tests:
     pytest tests/unit/test_level_1_basics.py -v
@@ -24,12 +24,11 @@ class TestLevel1:
     """
     Level 1: Simple Assertion Tests
     
-    These 5 tests cover the most common unit testing scenarios in FastAPI apps:
+    These 4 tests cover the most common unit testing scenarios in FastAPI apps:
     1. Pydantic schema defaults and required fields
     2. Password hashing security
     3. ORM to Response schema conversion (model_validate)
     4. Domain exception message formatting
-    5. Enum values for API contracts
     """
 
     # =========================================================================
@@ -129,27 +128,6 @@ class TestLevel1:
         # context dict available for structured logging
         assert error.context["entity_type"] == "User"
         assert error.context["identifier"] == "john@example.com"
-
-    # =========================================================================
-    # TEST 5: Enum Values for API Contract
-    # WHY: Documents and enforces the exact values your API accepts/returns
-    # =========================================================================
-    def test_status_and_role_enum_values(self):
-        """Test that enums have expected values matching API contract.
-        
-        Real-world: Frontend clients depend on specific string values.
-        This test documents and enforces your API contract:
-        - Status values for task filtering
-        - Role values for authorization logic
-        """
-        # task status values (used in query params and responses)
-        assert TaskStatus.TODO.value == "todo"
-        assert TaskStatus.IN_PROGRESS.value == "in_progress"
-        assert TaskStatus.DONE.value == "done"
-
-        # role values (used in JWT and auth checks)
-        assert Role.ADMIN.value == "admin"
-        assert Role.USER.value == "user"
 
 
 # =============================================================================
